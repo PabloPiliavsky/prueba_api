@@ -7,4 +7,4 @@ $router = new Router();
  
 $router -> addRoute('jugadores','GET','jugadoresApiController','obtenerJugadores');
 
-$router -> route($_GET["resorce"], $_SERVER['REQUEST_METHOD']);
+$router -> route($_GET["resource"], $_SERVER['REQUEST_METHOD']);

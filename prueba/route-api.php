@@ -1,7 +1,7 @@
 <?php
 
 require_once './libs/Router.php';
-require_once './API/controller/jugadores.api.controller.php';
+require_once './APP/controller/jugadores.api.controller.php';
 
 $router = new Router();
  

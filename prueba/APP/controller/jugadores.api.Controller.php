@@ -1,7 +1,7 @@
 <?php
 
-require_once '/API/model/jugadores.model.php';
-require_once '/API/view/jugadores.api.view.php';
+require_once '/APP/model/jugadores.model.php';
+require_once '/APP/view/jugadores.api.view.php';
 
 class jugadoresApiController{
     private $model;
@@ -19,7 +19,7 @@ class jugadoresApiController{
         return json_decode($this->data);
     }
 
-    function obtenerJugadores($params = null){
+    function obtenerJugadores(){
         $jugadores= $this -> model -> obtenerJugadores();
         $this -> view ->response($jugadores, 200);
     }
@@ -29,8 +29,3 @@ class jugadoresApiController{
 
 
 }
-
-
-
-
-?>

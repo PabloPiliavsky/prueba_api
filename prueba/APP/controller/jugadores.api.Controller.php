@@ -1,7 +1,7 @@
 <?php
 
-require_once '/APP/model/jugadores.model.php';
-require_once '/APP/view/jugadores.api.view.php';
+require_once './APP/model/jugadores.model.php';
+require_once './APP/view/jugadores.api.view.php';
 
 class jugadoresApiController{
     private $model;

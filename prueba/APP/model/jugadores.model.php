@@ -21,6 +21,11 @@
             return $jugador;
         }
 
+        function eliminarJugadorById($id){
+            $sentencia = $this -> db -> prepare ("DELETE FROM jugadores WHERE (id) = :id");
+            $sentencia -> execute([':id'=>$id]);
+        }
+
 
     }
 ?>

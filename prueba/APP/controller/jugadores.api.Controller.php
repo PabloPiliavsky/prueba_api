@@ -26,13 +26,33 @@ class jugadoresApiController{
 
     function obtenerJugadorById($params){
         if(isset($params[':ID'])){
-            $jugador = $this -> model -> obtenerJugadorById($params[':ID']);
+            $id=$params[':ID'];
+            $jugador = $this -> model -> obtenerJugadorById($id);
             if(!empty($jugador)){
                 $this -> view -> response($jugador,200);
             }
             else{
                 return $this->view->response("El jugador no existe", 404); 
             }
+        }
+        else{
+            return $this->view->response("El ID no fue indicado", 404); 
+        }
+
+    }
+
+    function eliminarJugador($params){
+        if(isset($params[':ID'])){
+            $id = $params[':ID'];
+            $jugador = $this -> model -> obtenerJugadorById($id);
+            if($jugador){//comprobar que existe el jugador
+                $this -> model -> eliminarJugadorById($id);
+                $this -> view -> response($jugador,200);
+            }
+            else{
+                $this -> view -> response("el jugador que se quiere borrar no existe o no fue encontrado",404);
+            }
+
         }
         else{
             return $this->view->response("El ID no fue indicado", 404); 

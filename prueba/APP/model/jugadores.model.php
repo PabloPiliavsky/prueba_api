@@ -26,6 +26,31 @@
             $sentencia -> execute([':id'=>$id]);
         }
 
+        public function agregarjugador($jugador){
+        $sentencia= $this->db->prepare("INSERT INTO jugadores (nombre, apellido, descripcion, posicion, foto, id_pais) 
+                                     VALUES (:nombre, :apellido, :descripcion, :posicion, :foto, :id_pais)");
+        $sentencia->execute([':nombre' => $jugador->nombre,
+                        ':apellido'=> $jugador->apellido, 
+                         ':descripcion' => $jugador->descripcion, 
+                         ':posicion' => $jugador->posicion,
+                         ':foto' => $jugador->foto,
+                         ':id_pais'=> $jugador ->id_pais]);
+        $id = $this->db->lastInsertId();
+        return $id;
+        }
+
+        function ordenarJugadores($criterio, $orden){ //criterio serviria para tomar el criterio en si y si es asc o desc
+            $sentencia = $this -> db -> prepare("SELECT * FROM jugadores ORDER BY criterio=? orden=?");
+            $sentencia -> execute([$criterio,$orden]);
+            $jugadores = $sentencia -> fetchAll(PDO::FETCH_OBJ);
+            return $jugadores;
+        } 
+
+        function actualizarJugador($jugador, $id){
+            $sentencia = $this -> db -> prepare("UPDATE jugadores SET nombre=?, apellido=?, descripcion=?, posicion=?, foto=?, id_pais=? WHERE id=?");
+            $sentencia -> execute([$jugador->nombre,$jugador->apellido,$jugador->descripcion,$jugador->posicion,$jugador->foto,$jugador->id_pais,$id]); 
+        }
+
 
     }
 ?>

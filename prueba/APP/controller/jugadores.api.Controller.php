@@ -21,7 +21,7 @@ class jugadoresApiController{
 
     function obtenerJugadores(){
         $jugadores= $this -> model -> obtenerJugadores();
-        $this -> view ->response($jugadores, 200);
+        return $this -> view ->response($jugadores, 200); // creo que el return no es necesario porque aplica una funcion, por lo que en realidad no retorna nada
     }
 
     function obtenerJugadorById($params){
@@ -50,7 +50,7 @@ class jugadoresApiController{
                 $this -> view -> response($jugador,200);
             }
             else{
-                $this -> view -> response("el jugador que se quiere borrar no existe o no fue encontrado",404);
+                return $this -> view -> response("el jugador que se quiere borrar no existe o no fue encontrado",404);
             }
 
         }
@@ -59,6 +59,43 @@ class jugadoresApiController{
         }
 
     }
+
+    function agregarJugador(){
+        $jugador= $this -> getData();
+        if (empty($jugador->nombre) || empty($jugador->apellido) || empty($jugador->descripcion) || empty($jugador->posicion) || empty($jugador->foto) || empty($jugador->id_pais)){
+            return $this -> view -> response("complete los datos",400);
+        }
+        else{
+            $id = $this -> model -> agregarjugador($jugador);
+            $dataJugador = $this -> model -> obtenerJugadorbyId($id);
+            return $this -> view -> response($dataJugador,200);
+        }
+    }
+    function ordenarJugadores($criterio,$orden){
+        if(isset($criterio) && isset($orden)){
+            $jugadores= $this -> model -> ordenarJugadores($criterio,$orden);
+            return $this -> view ->response($jugadores, 200);
+        }
+
+
+    }
+
+    function actualizarJugador($params){
+        if(isset($params)){
+            $id=$params[':ID'];
+            $jugador= $this -> model -> obtenerJugadorbyId($id);
+            if($jugador){
+                $jugadorData= $this -> getData();
+                $this -> model -> actualizarJugador($jugadorData,$id);
+                $this -> view -> response("jugador $id actualizado", 200);
+            }
+            else
+                $this -> view -> response("jugador $id no encontrado", 404);
+        }
+        else
+            $this -> view -> response("parametro no seteado",404); 
+    }
+    
 
 
 

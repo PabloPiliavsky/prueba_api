@@ -71,9 +71,9 @@ class jugadoresApiController{
             return $this -> view -> response($dataJugador,200);
         }
     }
-    function ordenarJugadores($criterio,$orden){
-        if(isset($criterio) && isset($orden)){
-            $jugadores= $this -> model -> ordenarJugadores($criterio,$orden);
+    function ordenarJugadores($params){
+        if(isset($params)){
+            $jugadores= $this -> model -> ordenarJugadores($params['criterio'],$params['orden']);
             return $this -> view ->response($jugadores, 200);
         }
 

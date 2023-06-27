@@ -71,13 +71,11 @@ class jugadoresApiController{
             return $this -> view -> response($dataJugador,200);
         }
     }
-    function ordenarJugadores($params){
-        if(isset($params)){
-            $jugadores= $this -> model -> ordenarJugadores($params['criterio'],$params['orden']);
+    function ordenarJugadores(){
+        if(isset($_GET['criterio'])||isset($_GET['orden'])){//hacer if con los posibles atributos y nombrarlos como string en una variable para evitar la inyeccion
+            $jugadores= $this -> model -> ordenarJugadores($_GET['criterio'],$_GET['orden']);
             return $this -> view ->response($jugadores, 200);
         }
-
-
     }
 
     function actualizarJugador($params){
@@ -94,6 +92,25 @@ class jugadoresApiController{
         }
         else
             $this -> view -> response("parametro no seteado",404); 
+    }
+
+    function paginar(){
+        if(isset($_GET['pagina']) && isset($_GET['filas'])){//corroborar que no sea ni negativo ni un caracter no numerico y que la cantidad de filas sea mayor que 0
+            $pagina=0;
+            $pagina = $pagina + $_GET['filas']*($_GET['pagina']-1);//el 10 es porque todavia no use un param para poner la cantidad de filas
+            $jugadoresPaginado = $this -> model -> paginar($pagina,$_GET['filas']);
+            $this -> view -> response($jugadoresPaginado,200); 
+        }
+
+    }
+
+    function filtrar(){ //aca deberiamos tomar 2 params para que tenga uno que indique la columna a elegir y otro que de el valor para tomar como filtro
+        if(isset($_GET['columna']) && isset($_GET['filtro'])){
+            $jugadoresFiltrados = $this -> model -> filtrar($_GET['columna'],$_GET['filtro']);
+            $this -> view ->response($jugadoresFiltrados,200);
+        }
+
+
     }
     
 
